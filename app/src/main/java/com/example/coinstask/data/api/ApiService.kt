@@ -3,7 +3,9 @@ package com.example.coinstask.data.api
 import com.example.coinstask.data.dto.CoinDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
@@ -31,15 +33,45 @@ class ApiService {
                         response.append(line)
                     }
                     reader.close()
-                    response.toString()
+
+                    // Parse the JSON response into a list of CoinDto objects
+                    val coinsJson = response.toString()
+                    val jsonArray = JSONArray(coinsJson)
+                    val coins = mutableListOf<CoinDto>()
+
+                    for (i in 0 until jsonArray.length()) {
+                        val coinObject = jsonArray.getJSONObject(i)
+                        val id = coinObject.getString("id")
+                        val name = coinObject.getString("name")
+                        val is_active = coinObject.getBoolean("is_active")
+                        val rank = coinObject.getInt("rank")
+                        val symbol = coinObject.getString("symbol")
+                        val is_new = coinObject.getBoolean("is_new")
+                        val type = coinObject.getString("type")
+
+                        val coinDto = CoinDto(
+                            id = id,
+                            name = name,
+                            is_active = is_active,
+                            rank = rank,
+                            symbol = symbol,
+                            is_new = is_new,
+                            type = type
+                        )
+                        coins.add(coinDto)
+                    }
+                    coins
                 } else {
-                    null
+                    // Handle the case when the response is not HTTP_OK
+                    throw IOException("API request failed with response code $responseCode")
                 }
             }
         } finally {
             connection?.disconnect()
         }
     }
+
+
 
     suspend fun getCoinDetails(coinId: String): HttpURLConnection? = withContext(Dispatchers.IO) {
         val url = URL("$baseUrl/coins/$coinId")

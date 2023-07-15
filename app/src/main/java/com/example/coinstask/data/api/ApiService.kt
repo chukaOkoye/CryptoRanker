@@ -1,5 +1,6 @@
 package com.example.coinstask.data.api
 
+import com.example.coinstask.data.dto.CoinDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -17,8 +18,8 @@ class ApiService {
         return@withContext try {
             connection?.apply {
                 requestMethod = "GET"
-                connectTimeout = 10000 // Set the connection timeout
-                readTimeout = 10000 // Set the read timeout
+                connectTimeout = 10000
+                readTimeout = 10000
 
                 // Get the response from the API
                 val responseCode = responseCode
@@ -47,8 +48,8 @@ class ApiService {
         return@withContext try {
             connection?.apply {
                 requestMethod = "GET"
-                connectTimeout = 10000 // Set the connection timeout
-                readTimeout = 10000 // Set the read timeout
+                connectTimeout = 10000
+                readTimeout = 10000
 
                 // Get the response from the API
                 val responseCode = responseCode

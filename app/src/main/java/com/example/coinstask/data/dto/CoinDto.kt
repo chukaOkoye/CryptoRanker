@@ -1,15 +1,16 @@
 package com.example.coinstask.data.dto
 
 import com.example.coinstask.domain.CoinData
+import com.google.gson.annotations.SerializedName
 
 data class CoinDto(
-    val id: String,
-    val is_active: Boolean,
-    val is_new: Boolean,
-    val name: String,
-    val rank: Int,
-    val symbol: String,
-    val type: String
+    @SerializedName("id") val id: String,
+    @SerializedName("is_active") val is_active: Boolean,
+    @SerializedName("is_new") val is_new: Boolean,
+    @SerializedName("name") val name: String,
+    @SerializedName("rank") val rank: Int,
+    @SerializedName("symbol") val symbol: String,
+    @SerializedName("type") val type: String
 )
 
 fun CoinDto.toCoinData(): CoinData {

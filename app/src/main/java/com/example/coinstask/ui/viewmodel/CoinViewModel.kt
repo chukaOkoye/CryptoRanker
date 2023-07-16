@@ -5,9 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
 import com.example.coinstask.data.repository.CoinRepository
+import com.example.coinstask.data.repository.CoinRepositoryImpl
 import kotlinx.coroutines.launch
 
-class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
+class CoinViewModel(private val coinRepository: CoinRepositoryImpl) : ViewModel() {
 
     private val _coins = MutableLiveData<List<CoinDto>>()
     val coins: LiveData<List<CoinDto>> get() = _coins
@@ -22,7 +23,7 @@ class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val coinList = coinRepository.getCoins()
-                _coins.value = listOf(coinList)
+                _coins.value = coinList
             } catch (e: Exception) {
                 _error.value = "Error fetching coins: ${e.message}"
             }

@@ -6,6 +6,6 @@ import com.example.coinstask.data.dto.CoinDto
 import java.net.HttpURLConnection
 
 interface CoinRepository {
-    suspend fun getCoins(): CoinDto
+    suspend fun getCoins(): List<CoinDto>
     suspend fun getCoinDetails(coinId: String): CoinDetailDto
 }

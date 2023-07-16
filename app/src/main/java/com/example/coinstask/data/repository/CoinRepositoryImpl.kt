@@ -5,12 +5,16 @@ import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
 import java.net.HttpURLConnection
 
-class CoinRepositoryImpl(private val apiService: ApiService) : CoinRepository {
-    override suspend fun getCoins(): CoinDto {
+class CoinRepositoryImpl() : CoinRepository {
+
+    // Removed HTTPConnection for clarity
+    private val apiService: ApiService = ApiService.getInstance()
+
+    override suspend fun getCoins(): List<CoinDto> {
         return apiService.getCoins()
     }
 
     override suspend fun getCoinDetails(coinId: String): CoinDetailDto {
-        return apiService.getCoinDetails(coinId)
+        return getCoinDetails(coinId)
     }
 }

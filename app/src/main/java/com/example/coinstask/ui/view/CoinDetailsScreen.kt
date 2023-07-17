@@ -39,10 +39,11 @@ fun CoinDetailsScreen(
                 modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Text(text = "Name: ${coinDetail.name}")
                 Spacer(modifier = Modifier.padding(8.dp))
                 Text(text = "Description: ${coinDetail.description}")
                 Spacer(modifier = Modifier.padding(8.dp))
-                Text(text = "ID: ${coinDetail.id}")
+                Text(text = "Type: ${coinDetail.type}")
                 Spacer(modifier = Modifier.padding(8.dp))
                 Text(text = "Is Active: ${coinDetail.is_active}")
                 Spacer(modifier = Modifier.padding(8.dp))

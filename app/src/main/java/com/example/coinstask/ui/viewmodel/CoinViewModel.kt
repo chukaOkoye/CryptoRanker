@@ -1,4 +1,5 @@
-import androidx.compose.runtime.MutableState
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -6,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
 import com.example.coinstask.data.repository.CoinRepository
-import com.example.coinstask.data.repository.CoinRepositoryImpl
 import kotlinx.coroutines.launch
 
 class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
@@ -20,11 +20,21 @@ class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
+    init {
+        getCoins()
+    }
+
     fun getCoins() {
         viewModelScope.launch {
             try {
-                val coinList = coinRepository.getCoins()
-                _coins.value = listOf(coinList)
+                val coinResult = coinRepository.getCoins()
+                if (coinResult.isSuccess) {
+                    coins.value = coinResult.getOrThrow()
+                    // To test if the coin value is present
+                    Log.d(TAG, "Coins: ${coins.value}")
+                } else {
+                    _error.value = "Error fetching coins: ${coinResult.exceptionOrNull()?.message}"
+                }
             } catch (e: Exception) {
                 _error.value = "Error fetching coins: ${e.message}"
             }

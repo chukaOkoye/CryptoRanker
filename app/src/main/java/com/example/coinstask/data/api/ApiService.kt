@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 interface ApiService {
     @GET("coins")
-    suspend fun getCoins(): CoinDto
+    suspend fun getCoins(): List<CoinDto>
     @GET("coins/{coinId}")
     suspend fun getCoinDetails(@Path("coinId") coinId: String): CoinDetailDto
 

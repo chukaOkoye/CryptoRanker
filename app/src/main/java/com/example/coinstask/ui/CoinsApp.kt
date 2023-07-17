@@ -6,7 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.coinstask.data.repository.CoinRepositoryImpl
+import com.example.coinstask.data.api.ApiService
+import com.example.coinstask.data.repository.CoinRepository
 
 @Composable
 fun CoinsApp() {
@@ -19,9 +20,8 @@ fun CoinsApp() {
         ) {
             composable(route = "/") {
                 CoinScreen(
-                    coinViewModel = CoinViewModel(coinRepository = CoinRepositoryImpl()),
-                    onCoinClick = { id -> navController.navigate("/coin/$id")
-                })
+                    coinViewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
+                    ApiService.getInstance())))
             }
 
             composable(

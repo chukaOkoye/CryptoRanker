@@ -1,6 +1,10 @@
 package com.example.coinstask.ui.view
 
 import CoinViewModel
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CoinScreen(
     coinViewModel: CoinViewModel,
@@ -60,7 +65,13 @@ fun CoinScreen(
                                     onClick = { onCoinClick(coin.id) },
                                     modifier = Modifier.padding(16.dp)
                                 ) {
-                                    Text(coin.name)
+                                    Text(coin.name,
+                                    modifier =
+                                        Modifier.animateItemPlacement
+                                            (animationSpec =
+                                                tween(durationMillis = 600)
+                                                )
+                                            )
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Text(coin.symbol)
                                     Spacer(modifier = Modifier.height(8.dp))

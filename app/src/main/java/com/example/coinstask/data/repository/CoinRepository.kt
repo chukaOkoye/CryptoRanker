@@ -13,8 +13,6 @@ class CoinRepository(
     suspend fun getCoins(): Result<List<CoinDto>> {
         return try {
             val coins = apiService.getCoins()
-            // Testing the response
-            Log.d("CoinRepository", "getCoins() response: $coins")
             Result.success(coins)
         } catch (e: Exception){
             Result.failure(e)
@@ -24,7 +22,6 @@ class CoinRepository(
     suspend fun getCoinDetails(coinId: String): Result<CoinDetailDto> {
         return try {
             val coinDetail = apiService.getCoinDetails(coinId)
-            Log.d("CoinRepository", "getCoinDetail() response: $coinDetail")
             Result.success(coinDetail)
         } catch (e: Exception) {
             Result.failure(e)

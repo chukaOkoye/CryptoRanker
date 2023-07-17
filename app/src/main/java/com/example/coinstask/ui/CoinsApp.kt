@@ -21,13 +21,18 @@ fun CoinsApp() {
             composable(route = "/") {
                 CoinScreen(
                     coinViewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
-                    ApiService.getInstance())))
+                    ApiService.getInstance())),
+                    onCoinClick = { coinId ->
+                        // Handle the click event for the coin
+                        navController.navigate("/coin/$coinId")
+                    })
             }
 
-            composable(
-                route = "/coin/{id}",
-            ) {
-                // Add CoinDetailsScreen
+            composable(route = "/coin/{id}") { backStackEntry ->
+                val coinId = backStackEntry.arguments?.getString("id")
+                CoinDetailsScreen(coinId = coinId ?: "",
+                    coinViewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
+                    ApiService.getInstance())))
             }
         }
     }

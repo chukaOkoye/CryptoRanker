@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.coinstask.data.api.ApiService
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
+import kotlin.Result.Companion.failure
 
 
 class CoinRepository(
@@ -20,7 +21,13 @@ class CoinRepository(
         }
     }
 
-    suspend fun getCoinDetails(coinId: String): CoinDetailDto {
-        return apiService.getCoinDetails(coinId)
+    suspend fun getCoinDetails(coinId: String): Result<CoinDetailDto> {
+        return try {
+            val coinDetail = apiService.getCoinDetails(coinId)
+            Log.d("CoinRepository", "getCoinDetail() response: $coinDetail")
+            Result.success(coinDetail)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }

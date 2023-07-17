@@ -15,7 +15,7 @@ class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
     val coins = _coins
 
     private val _coinDetails = MutableLiveData<CoinDetailDto>()
-    val coinDetails: LiveData<CoinDetailDto> get() = _coinDetails
+    val coinDetails = _coinDetails
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
@@ -44,8 +44,12 @@ class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
     fun getCoinDetails(coinId:String) {
         viewModelScope.launch {
             try {
-                val coinDetail = coinRepository.getCoinDetails(coinId)
-                _coinDetails.value = coinDetail
+                val coinDetailResult = coinRepository.getCoinDetails(coinId)
+                // To test if the coin detail value is present
+                if (coinDetailResult.isSuccess){
+                    coinDetails.value = coinDetailResult.getOrThrow()
+                    Log.d(TAG, "Coin Detail: ${coinDetails.value}")
+                }
             } catch (e: Exception) {
                 _error.value = "Error fetching coin details: ${e.message}"
             }

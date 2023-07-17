@@ -1,6 +1,5 @@
 package com.example.coinstask.data.dto
 
-import com.example.coinstask.domain.CoinData
 import com.google.gson.annotations.SerializedName
 
 data class CoinDto(
@@ -12,15 +11,3 @@ data class CoinDto(
     @SerializedName("symbol") val symbol: String,
     @SerializedName("type") val type: String
 )
-
-fun CoinDto.toCoinData(): CoinData {
-    return CoinData(
-        id = id,
-        name = name,
-        is_active = is_active,
-        rank = rank,
-        symbol = symbol,
-        is_new = is_new,
-        type = type
-        )
-}

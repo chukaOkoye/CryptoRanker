@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.coinstask.data.api.ApiService
 import com.example.coinstask.data.repository.CoinRepository
+import com.example.coinstask.ui.view.CoinDetailsScreen
+import com.example.coinstask.ui.view.CoinScreen
 
 @Composable
 fun CoinsApp() {
@@ -23,16 +25,23 @@ fun CoinsApp() {
                     coinViewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
                     ApiService.getInstance())),
                     onCoinClick = { coinId ->
-                        // Handle the click event for the coin
                         navController.navigate("/coin/$coinId")
                     })
             }
 
-            composable(route = "/coin/{id}") { backStackEntry ->
+            composable(
+                route = "/coin/{id}",
+            ) { backStackEntry ->
                 val coinId = backStackEntry.arguments?.getString("id")
-                CoinDetailsScreen(coinId = coinId ?: "",
+                CoinDetailsScreen(
+                    coinId = coinId ?: "",
                     coinViewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
-                    ApiService.getInstance())))
+                    ApiService.getInstance())),
+                    navController = navController,
+                    onBackClick = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }

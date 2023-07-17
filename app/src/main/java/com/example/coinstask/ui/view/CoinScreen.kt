@@ -1,6 +1,7 @@
 package com.example.coinstask.ui.view
 
 import CoinViewModel
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -60,18 +61,14 @@ fun CoinScreen(
                     val sortedCoins = coinsState!!.sortedBy { it.name }
                     LazyColumn {
                         items(sortedCoins) { coin ->
-                            Column {
+                            Column(
+                                modifier = Modifier.animateContentSize() // Animate item placement
+                            ) {
                                 Button(
                                     onClick = { onCoinClick(coin.id) },
                                     modifier = Modifier.padding(16.dp)
                                 ) {
-                                    Text(coin.name,
-                                    modifier =
-                                        Modifier.animateItemPlacement
-                                            (animationSpec =
-                                                tween(durationMillis = 600)
-                                                )
-                                            )
+                                    Text(coin.name)
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Text(coin.symbol)
                                     Spacer(modifier = Modifier.height(8.dp))

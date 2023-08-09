@@ -2,9 +2,6 @@ package com.example.coinstask.ui.view
 
 import CoinViewModel
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,18 +26,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CoinScreen(
-    coinViewModel: CoinViewModel,
+    viewModel: CoinViewModel = viewModel(),
     onCoinClick: (id: String) -> Unit
 ) {
     LaunchedEffect(true) {
-        coinViewModel.getCoins()
+        viewModel.fetchCoins()
     }
 
-    val coinsState by coinViewModel.coins.observeAsState()
+    val coinsState by viewModel.coins.observeAsState()
     val showDialog = remember { mutableStateOf(false) }
     val selectedCoinId = remember { mutableStateOf("") }
 
@@ -48,9 +46,11 @@ fun CoinScreen(
         Column(Modifier.padding(top = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
                 onClick = {
-                    coinViewModel.getCoins() // Refresh coins on button click
+                    viewModel.fetchCoins() // Refresh coins on button click
                 },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
             ) {
                 Text("Refresh")
             }
@@ -58,9 +58,8 @@ fun CoinScreen(
 
             if (coinsState != null) {
                 if (coinsState!!.isNotEmpty()) {
-                    val sortedCoins = coinsState!!.sortedBy { it.name }
                     LazyColumn {
-                        items(sortedCoins) { coin ->
+                        items(coinsState!!) { coin ->
                             Column(
                                 modifier = Modifier.animateContentSize() // Animate item placement
                             ) {
@@ -87,7 +86,7 @@ fun CoinScreen(
                     )
                 }
             } else {
-                val errorState by coinViewModel.error.observeAsState()
+                val errorState by viewModel.error.observeAsState()
                 if (errorState != null) {
                     Text(
                         text = "Error: $errorState",

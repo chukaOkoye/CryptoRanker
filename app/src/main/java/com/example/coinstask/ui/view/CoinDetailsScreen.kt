@@ -18,20 +18,21 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 @Composable
 fun CoinDetailsScreen(
-    coinViewModel: CoinViewModel,
     coinId: String,
     navController: NavController,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: CoinViewModel = viewModel()
 ) {
-    LaunchedEffect(true) {
-        coinViewModel.getCoinDetails(coinId)
-    }
+    val coinDetailState by viewModel.coinDetails.observeAsState()
 
-    val coinDetailState by coinViewModel.coinDetails.observeAsState()
+    LaunchedEffect(true) {
+        viewModel.fetchCoinDetails(coinId)
+    }
 
     Box(Modifier.fillMaxSize()) {
         coinDetailState?.let { coinDetail ->

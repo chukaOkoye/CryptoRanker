@@ -21,10 +21,10 @@ class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
     val error: LiveData<String> get() = _error
 
     init {
-        getCoins()
+        fetchCoins()
     }
 
-    fun getCoins() {
+    fun fetchCoins() {
         viewModelScope.launch {
             try {
                 val coinResult = coinRepository.getCoins()
@@ -41,7 +41,7 @@ class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
         }
     }
 
-    fun getCoinDetails(coinId:String) {
+    fun fetchCoinDetails(coinId:String) {
         viewModelScope.launch {
             try {
                 val coinDetailResult = coinRepository.getCoinDetails(coinId)

@@ -1,6 +1,5 @@
 package com.example.coinstask.data.repository
 
-import android.util.Log
 import com.example.coinstask.data.api.ApiService
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
@@ -15,7 +14,7 @@ class CoinRepository(
             val coins = apiService.getCoins()
             Result.success(coins)
         } catch (e: Exception){
-            Result.failure(e)
+            failure(e)
         }
     }
 
@@ -24,7 +23,7 @@ class CoinRepository(
             val coinDetail = apiService.getCoinDetails(coinId)
             Result.success(coinDetail)
         } catch (e: Exception) {
-            Result.failure(e)
+            failure(e)
         }
     }
 }

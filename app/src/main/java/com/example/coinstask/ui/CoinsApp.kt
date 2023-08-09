@@ -3,6 +3,7 @@ package com.example.coinstask.ui
 import CoinViewModel
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,7 +23,7 @@ fun CoinsApp() {
         ) {
             composable(route = "/") {
                 CoinScreen(
-                    coinViewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
+                    viewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
                     ApiService.getInstance())),
                     onCoinClick = { coinId ->
                         navController.navigate("/coin/$coinId")
@@ -35,7 +36,7 @@ fun CoinsApp() {
                 val coinId = backStackEntry.arguments?.getString("id")
                 CoinDetailsScreen(
                     coinId = coinId ?: "",
-                    coinViewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
+                    viewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
                     ApiService.getInstance())),
                     navController = navController,
                     onBackClick = {

@@ -7,9 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
 import com.example.coinstask.data.repository.CoinRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CoinViewModel(private val coinRepository: CoinRepository) : ViewModel() {
+@HiltViewModel
+class CoinViewModel @Inject constructor(private val coinRepository: CoinRepository) : ViewModel() {
 
     private var _coins = MutableLiveData<List<CoinDto>>()
     val coins = _coins

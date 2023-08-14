@@ -23,8 +23,6 @@ fun CoinsApp() {
         ) {
             composable(route = "/") {
                 CoinScreen(
-                    viewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
-                    ApiService.getInstance())),
                     onCoinClick = { coinId ->
                         navController.navigate("/coin/$coinId")
                     })
@@ -36,8 +34,6 @@ fun CoinsApp() {
                 val coinId = backStackEntry.arguments?.getString("id")
                 CoinDetailsScreen(
                     coinId = coinId ?: "",
-                    viewModel = CoinViewModel(coinRepository = CoinRepository(apiService =
-                    ApiService.getInstance())),
                     navController = navController,
                     onBackClick = {
                         navController.popBackStack()

@@ -7,7 +7,7 @@ import kotlin.Result.Companion.failure
 
 
 class CoinRepository(
-    private var apiService: ApiService
+    private val apiService: ApiService = ApiService.getInstance()
     ) {
     suspend fun getCoins(): Result<List<CoinDto>> {
         return try {

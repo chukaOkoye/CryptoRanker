@@ -18,7 +18,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
@@ -26,13 +25,13 @@ import androidx.navigation.NavController
 fun CoinDetailsScreen(
     coinId: String,
     navController: NavController,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: CoinViewModel
 ) {
-    val viewModel: CoinViewModel = hiltViewModel()
     val coinDetailState by viewModel.coinDetails.observeAsState()
 
     LaunchedEffect(true) {
-        viewModel.fetchCoinDetails(coinId)
+        viewModel.loadCoinDetails(coinId)
     }
 
     Box(Modifier.fillMaxSize()) {

@@ -1,28 +1,25 @@
-package com.example.coinstask.ui
+package com.example.coinstask
 
 import CoinViewModel
+import android.app.Application
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.coinstask.data.api.ApiService
-import com.example.coinstask.data.repository.CoinRepository
 import com.example.coinstask.ui.view.CoinDetailsScreen
 import com.example.coinstask.ui.view.CoinScreen
 
 @Composable
-fun CoinsApp() {
+fun MainApp() {
     val navController = rememberNavController()
 
     MaterialTheme {
-        NavHost(
-            navController,
-            "/"
-        ) {
+        NavHost(navController = navController, startDestination = "/") {
             composable(route = "/") {
                 CoinScreen(
+                    viewModel(),
                     onCoinClick = { coinId ->
                         navController.navigate("/coin/$coinId")
                     })
@@ -37,7 +34,8 @@ fun CoinsApp() {
                     navController = navController,
                     onBackClick = {
                         navController.popBackStack()
-                    }
+                    },
+                    viewModel()
                 )
             }
         }

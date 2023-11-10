@@ -2,6 +2,7 @@ package com.example.coinstask.data.api
 
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

@@ -1,18 +1,21 @@
+import android.app.Application
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.coinstask.data.api.ApiService
+import com.example.coinstask.data.api.NetworkDataSource
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
 import com.example.coinstask.data.repository.CoinRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class CoinViewModel @Inject constructor(private val coinRepository: CoinRepository) : ViewModel() {
+class CoinViewModel (application: Application
+    ) : AndroidViewModel(application) {
+
+    private val repository: CoinRepository
 
     private var _coins = MutableLiveData<List<CoinDto>>()
     val coins = _coins
@@ -24,35 +27,35 @@ class CoinViewModel @Inject constructor(private val coinRepository: CoinReposito
     val error: LiveData<String> get() = _error
 
     init {
-        fetchCoins()
+        val apiService = ApiService.getInstance()
+        val networkDataSource = NetworkDataSource(apiService)
+        repository = CoinRepository(networkDataSource)
     }
 
-    fun fetchCoins() {
+    fun loadCoins() {
         viewModelScope.launch {
             try {
-                val coinResult = coinRepository.getCoins()
-                if (coinResult.isSuccess) {
-                    coins.value = coinResult.getOrThrow()
-                    // To test if the coin value is present
-                    Log.d(TAG, "Coins: ${coins.value}")
-                } else {
-                    _error.value = "Error fetching coins: ${coinResult.exceptionOrNull()?.message}"
-                }
+                val coin = repository.getCoins()
+                coins.value = coin
+
+                // To test if the coin value is present
+                Log.d(TAG, "Coins: ${coins.value}")
+
             } catch (e: Exception) {
                 _error.value = "Error fetching coins: ${e.message}"
             }
         }
     }
 
-    fun fetchCoinDetails(coinId:String) {
+    fun loadCoinDetails(coinId:String) {
         viewModelScope.launch {
             try {
-                val coinDetailResult = coinRepository.getCoinDetails(coinId)
+                val coin = repository.getCoinDetails(coinId)
+                coinDetails.value = coin
+
                 // To test if the coin detail value is present
-                if (coinDetailResult.isSuccess){
-                    coinDetails.value = coinDetailResult.getOrThrow()
-                    Log.d(TAG, "Coin Detail: ${coinDetails.value}")
-                }
+                Log.d(TAG, "Coin Detail: ${coinDetails.value}")
+
             } catch (e: Exception) {
                 _error.value = "Error fetching coin details: ${e.message}"
             }

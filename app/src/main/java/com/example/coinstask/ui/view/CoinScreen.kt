@@ -37,6 +37,8 @@ fun CoinScreen(
     }
 
     val coinsState by viewModel.coins.observeAsState()
+
+//    val coinsSorted = remember(coinsState.sortedBy {  })
 //    val showDialog = remember { mutableStateOf(false) }
 //    val selectedCoinId = remember { mutableStateOf("") }
 
@@ -72,6 +74,7 @@ fun CoinScreen(
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Text(coin.symbol)
                                     Spacer(modifier = Modifier.height(8.dp))
+                                    Text(coin.rank.toString())
                                 }
                             }
                             Divider(color = Color.Gray, thickness = 1.dp)

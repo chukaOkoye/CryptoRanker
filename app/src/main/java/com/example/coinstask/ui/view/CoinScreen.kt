@@ -1,6 +1,7 @@
 package com.example.coinstask.ui.view
 
 import CoinViewModel
+import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,15 +48,18 @@ fun CoinScreen(
         Column(Modifier.padding(top = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
 
             // Refresh button
-            Button(
-                onClick = {
-                    viewModel.loadCoins() // Refresh coins on button click
-                },
+            Button(onClick = {
+                // Refresh coins on button click
+                viewModel.loadCoins()},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Text("Refresh")
+                if (viewModel.isLoading.value) {
+                    CircularProgressIndicator(color = Color.White)
+                } else {
+                    Text("Refresh")
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))

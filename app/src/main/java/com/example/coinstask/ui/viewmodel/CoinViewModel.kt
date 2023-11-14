@@ -1,9 +1,12 @@
 import android.app.Application
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.coinstask.data.api.ApiService
 import com.example.coinstask.data.api.NetworkDataSource
@@ -17,7 +20,10 @@ class CoinViewModel (application: Application
 
     private val repository: CoinRepository
 
-    private var _coins = MutableLiveData<List<CoinDto>>()
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+
+    private val _coins = MutableLiveData<List<CoinDto>>()
     val coins = _coins
 
     private val _coinDetails = MutableLiveData<CoinDetailDto>()
@@ -35,14 +41,17 @@ class CoinViewModel (application: Application
     fun loadCoins() {
         viewModelScope.launch {
             try {
+                _isLoading.value = true
                 val coin = repository.getCoins()
-                coins.value = coin
+                _coins.value = coin
 
                 // To test if the coin value is present
                 Log.d(TAG, "Coins: ${coins.value}")
 
             } catch (e: Exception) {
                 _error.value = "Error fetching coins: ${e.message}"
+            } finally {
+                _isLoading.value = false
             }
         }
     }
@@ -51,7 +60,7 @@ class CoinViewModel (application: Application
         viewModelScope.launch {
             try {
                 val coin = repository.getCoinDetails(coinId)
-                coinDetails.value = coin
+                _coinDetails.value = coin
 
                 // To test if the coin detail value is present
                 Log.d(TAG, "Coin Detail: ${coinDetails.value}")
@@ -61,4 +70,5 @@ class CoinViewModel (application: Application
             }
         }
     }
+
 }

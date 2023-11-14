@@ -36,6 +36,7 @@ class CoinViewModel (application: Application
         val apiService = ApiService.getInstance()
         val networkDataSource = NetworkDataSource(apiService)
         repository = CoinRepository(networkDataSource)
+        loadCoins()
     }
 
     fun loadCoins() {

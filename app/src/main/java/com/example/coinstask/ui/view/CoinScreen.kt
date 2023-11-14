@@ -75,11 +75,11 @@ fun CoinScreen(
                                     onClick = { onCoinClick(coin.id) },
                                     modifier = Modifier.padding(16.dp)
                                 ) {
+                                    Text("#${coin.rank}")
+                                    Spacer(modifier = Modifier.padding(6.dp))
                                     Text(coin.name)
-                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Spacer(modifier = Modifier.padding(6.dp))
                                     Text(coin.symbol)
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Text(coin.rank.toString())
                                 }
                             }
                             Divider(color = Color.Gray, thickness = 1.dp)

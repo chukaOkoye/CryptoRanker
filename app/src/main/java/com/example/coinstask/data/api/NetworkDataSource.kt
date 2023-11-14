@@ -16,8 +16,8 @@ class NetworkDataSource(
             return apiService.getCoins()
         } catch (e: Exception){
             logger.d("Exception from retrofit ${e.message}.")
+            throw FetchCoinsException("Failed to fetch coins", e)
         }
-        return TODO("Provide the return value")
     }
 
     suspend fun fetchCoinDetails(coinId: String): CoinDetailDto {
@@ -25,7 +25,12 @@ class NetworkDataSource(
             return apiService.getCoinDetails(coinId)
         } catch (e: Exception){
             logger.d("Exception from retrofit ${e.message}.")
+            throw FetchCoinDetailsException("Failed to fetch coin details", e)
+
         }
-        return TODO("Provide the return value")
     }
 }
+
+// Custom exceptions
+class FetchCoinsException(message: String, cause: Throwable? = null) : Exception(message, cause)
+class FetchCoinDetailsException(message: String, cause: Throwable) : Exception(message, cause)

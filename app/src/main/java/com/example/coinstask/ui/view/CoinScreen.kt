@@ -40,17 +40,17 @@ fun CoinScreen(
 
     val coinsState by viewModel.coins.observeAsState()
 
-//    val coinsSorted = remember(coinsState.sortedBy {  })
-//    val showDialog = remember { mutableStateOf(false) }
-//    val selectedCoinId = remember { mutableStateOf("") }
+    val coinsSorted = coinsState?.sortedBy{ it.rank }
 
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.padding(top = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
 
             // Refresh button
-            Button(onClick = {
-                // Refresh coins on button click
-                viewModel.loadCoins()},
+            Button(
+                onClick = {
+                    // Refresh coins on button click
+                    viewModel.loadCoins()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
@@ -98,7 +98,7 @@ fun CoinScreen(
                 val errorState by viewModel.error.observeAsState()
                 if (errorState != null) {
                     Text(
-                        text = "Error: $errorState",
+                        text = "$errorState",
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         style = androidx.compose.ui.text.TextStyle(color = Color.Red, fontSize = 18.sp)
                     )

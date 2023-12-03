@@ -34,7 +34,7 @@ class CoinViewModelTest {
     }
 
     @Test
-    fun `test getCoins retrieves and sets coins value`() = runBlockingTest {
+    fun `test getCoins retrieves and sets coins value`() = runTest {
         // Create a mock CoinRepository
         val coinRepository = mock(CoinRepository::class.java)
 

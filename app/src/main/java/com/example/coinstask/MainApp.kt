@@ -25,13 +25,10 @@ fun MainApp() {
                     })
             }
 
-            composable(
-                route = "/coin/{id}",
-            ) { backStackEntry ->
+            composable(route = "/coin/{id}",) { backStackEntry ->
                 val coinId = backStackEntry.arguments?.getString("id")
                 CoinDetailsScreen(
                     coinId = coinId ?: "",
-                    navController = navController,
                     onBackClick = {
                         navController.popBackStack()
                     },

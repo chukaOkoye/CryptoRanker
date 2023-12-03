@@ -24,7 +24,6 @@ import androidx.navigation.NavController
 @Composable
 fun CoinDetailsScreen(
     coinId: String,
-    navController: NavController,
     onBackClick: () -> Unit,
     viewModel: CoinViewModel
 ) {

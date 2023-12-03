@@ -31,7 +31,6 @@ class CoinViewModel (application: Application
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
-
     init {
         val apiService = ApiService.getInstance()
         val networkDataSource = NetworkDataSource(apiService)

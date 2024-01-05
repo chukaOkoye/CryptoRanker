@@ -13,6 +13,7 @@ import com.example.coinstask.data.api.NetworkDataSource
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
 import com.example.coinstask.data.repository.CoinRepository
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class CoinViewModel (application: Application
@@ -23,14 +24,15 @@ class CoinViewModel (application: Application
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
-    private val _coins = MutableLiveData<List<CoinDto>>()
+    private val _coins = MutableStateFlow<List<CoinDto>>(listOf())
     val coins = _coins
 
     private val _coinDetails = MutableLiveData<CoinDetailDto>()
     val coinDetails = _coinDetails
 
     private val _error = MutableLiveData<String>()
-    val error: LiveData<String> get() = _error
+    val error: LiveData<String> = _error
+
     init {
         val apiService = ApiService.getInstance()
         val networkDataSource = NetworkDataSource(apiService)

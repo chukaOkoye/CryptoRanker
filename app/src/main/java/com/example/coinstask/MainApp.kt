@@ -1,7 +1,5 @@
 package com.example.coinstask
 
-import CoinViewModel
-import android.app.Application
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel

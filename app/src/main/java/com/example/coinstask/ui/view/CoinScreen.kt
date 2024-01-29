@@ -1,9 +1,7 @@
 package com.example.coinstask.ui.view
 
-import CoinViewModel
-import android.widget.Toast
+import com.example.coinstask.ui.viewmodel.CoinViewModel
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,14 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
 
 @Composable
 fun CoinScreen(
@@ -41,7 +36,7 @@ fun CoinScreen(
     }
 
 
-    val coinsState by viewModel.coins.collectAsState()
+    val coinsState by viewModel.coins.observeAsState()
 
     val coinsSorted = coinsState?.sortedBy{ it.rank }
 

@@ -17,7 +17,7 @@ class NetworkDataSource(
         try {
             return apiService.getCoins()
         } catch (e: IOException){
-            Log.e(TAG,"Exception from retrofit ${e.message}.")
+            Log.e(TAG,"Exception from retrofit: `${e.message}`.")
             throw FetchCoinsException("Failed to fetch coins", e)
         }
     }

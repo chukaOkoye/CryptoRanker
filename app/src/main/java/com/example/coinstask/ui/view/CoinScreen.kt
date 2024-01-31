@@ -31,7 +31,7 @@ fun CoinScreen(
     viewModel: CoinViewModel,
     onCoinClick: (id: String) -> Unit ){
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
         viewModel.loadCoins()
     }
 

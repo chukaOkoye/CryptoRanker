@@ -1,4 +1,4 @@
-# CoinTask
+# CryptoRanker Android App
 
 FUNCTIONALITY
 

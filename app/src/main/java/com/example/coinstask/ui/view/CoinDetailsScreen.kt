@@ -28,7 +28,7 @@ fun CoinDetailsScreen(
 ) {
     val coinDetailState by viewModel.coinDetails.observeAsState()
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
         viewModel.loadCoinDetails(coinId)
     }
 

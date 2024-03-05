@@ -32,5 +32,4 @@ DELIVERABLES
 ## My Approach
 - Worked on making sure the main objectives were completed, however, was unsure of how to display the filter information, whether that would be a button on the screen or a constant display.
 - The ViewModelTest is incomplete due to issues with mocking the API service data, the IDE kept suggesting making the function public so it could be used but I opted against that.
-- If I had more time, I would work on filtering the names better and making the ViewModelTest work to test entries.
-- Sidenote: I kept experiencing API limits due to usage, adding more delays to the implementation.
+- Future work: I would work on filtering the names better and making the ViewModelTest work to test entries.

@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.coinstask.data.api.ApiService
+import com.example.coinstask.data.api.FetchCoinDetailsException
+import com.example.coinstask.data.api.FetchCoinsException
 import com.example.coinstask.data.api.NetworkDataSource
 import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
@@ -23,7 +25,7 @@ import kotlinx.coroutines.launch
 sealed class ListCoinState {
     object Loading : ListCoinState()
     data class Success(val coin: List<CoinDto>) : ListCoinState()
-    data class Error(val error: String) : ListCoinState()
+    data class Error(val error: FetchCoinsException) : ListCoinState()
 }
 class CoinViewModel : ViewModel() {
 
@@ -57,8 +59,8 @@ class CoinViewModel : ViewModel() {
                 // To test if the coin value is present
                 Log.d(TAG, "Coins: ${_screenState.value}")
 
-            } catch (e: Exception) {
-                _screenState.value = ListCoinState.Error(e.toString())
+            } catch (e: FetchCoinsException) {
+                _screenState.value = ListCoinState.Error(e)
             }
         }
     }
@@ -72,8 +74,8 @@ class CoinViewModel : ViewModel() {
                 // To test if the coin detail value is present
                 Log.d(TAG, "Coin Detail: ${coinDetails.value}")
 
-            } catch (e: Exception) {
-                _screenState.value = ListCoinState.Error(e.toString())
+            } catch (e: FetchCoinsException) {
+                _screenState.value = ListCoinState.Error(e)
 //                _error.value = "Error fetching coin details: ${e.message}"
             }
         }

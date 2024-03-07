@@ -1,4 +1,4 @@
-package com.example.coinstask.ui.viewmodel
+package com.example.coinstask.viewmodel
 
 import android.app.Application
 import android.content.ContentValues.TAG
@@ -17,24 +17,27 @@ import com.example.coinstask.data.dto.CoinDetailDto
 import com.example.coinstask.data.dto.CoinDto
 import com.example.coinstask.data.repository.CoinRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+sealed class ListCoinState {
+    object Loading : ListCoinState()
+    data class Success(val coin: List<CoinDto>) : ListCoinState()
+    data class Error(val error: String) : ListCoinState()
+}
 class CoinViewModel : ViewModel() {
+
+    private val _screenState = MutableStateFlow<ListCoinState>(ListCoinState.Loading)
+    val screenState = _screenState.asStateFlow()
 
     private val repository: CoinRepository
 
-    // Add sealed class for states
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
+    private val _coinDetails = MutableStateFlow(CoinDetailDto(description = "",
+        id = "", is_active = true, name =  "", type = ""))
+    val coinDetails = _coinDetails.asStateFlow()
 
-    private val _coins = MutableLiveData<List<CoinDto>>()
-    val coins = _coins
-
-    private val _coinDetails = MutableLiveData<CoinDetailDto>()
-    val coinDetails = _coinDetails
-
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> = _error
+//    private val _error = MutableLiveData<String>()
+//    val error: LiveData<String> = _error
 
     init {
         val apiService = ApiService.getInstance()
@@ -46,17 +49,16 @@ class CoinViewModel : ViewModel() {
     fun loadCoins() {
         viewModelScope.launch {
             try {
-                _isLoading.value = true
-                val coin = repository.getCoins()
-                _coins.value = coin
-
+                _screenState.value = ListCoinState.Loading
+                val coins = repository.getCoins()
+                if(coins.isNotEmpty()){
+                    _screenState.value = ListCoinState.Success(coins)
+                }
                 // To test if the coin value is present
-                Log.d(TAG, "Coins: ${coins.value}")
+                Log.d(TAG, "Coins: ${_screenState.value}")
 
             } catch (e: Exception) {
-                _error.value = "Error fetching coins: ${e.message}"
-            } finally {
-                _isLoading.value = false
+                _screenState.value = ListCoinState.Error(e.toString())
             }
         }
     }
@@ -71,7 +73,8 @@ class CoinViewModel : ViewModel() {
                 Log.d(TAG, "Coin Detail: ${coinDetails.value}")
 
             } catch (e: Exception) {
-                _error.value = "Error fetching coin details: ${e.message}"
+                _screenState.value = ListCoinState.Error(e.toString())
+//                _error.value = "Error fetching coin details: ${e.message}"
             }
         }
     }

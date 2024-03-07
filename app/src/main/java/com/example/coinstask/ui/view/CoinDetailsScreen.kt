@@ -1,6 +1,6 @@
 package com.example.coinstask.ui.view
 
-import com.example.coinstask.ui.viewmodel.CoinViewModel
+import com.example.coinstask.viewmodel.CoinViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +13,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -26,14 +27,14 @@ fun CoinDetailsScreen(
     onBackClick: () -> Unit,
     viewModel: CoinViewModel
 ) {
-    val coinDetailState by viewModel.coinDetails.observeAsState()
+    val coinDetailState by viewModel.coinDetails.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadCoinDetails(coinId)
     }
 
     Box(Modifier.fillMaxSize()) {
-        coinDetailState?.let { coinDetail ->
+        coinDetailState.let { coinDetail ->
             Column(
                 modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally

@@ -1,6 +1,6 @@
 package com.example.coinstask.ui.view
 
-import com.example.coinstask.ui.viewmodel.CoinViewModel
+import com.example.coinstask.viewmodel.CoinViewModel
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,21 +30,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.coinstask.viewmodel.ListCoinState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoinScreen(
     viewModel: CoinViewModel,
-    onCoinClick: (id: String) -> Unit ){
+    onCoinClick: (id: String) -> Unit){
 
     LaunchedEffect(Unit) {
         viewModel.loadCoins()
     }
 
+    val coinsState = viewModel.screenState.collectAsState().value
 
-    val coinsState by viewModel.coins.observeAsState()
-
-    val coinsSorted = coinsState?.sortedBy{ it.rank }
+    // val coinsSorted = coinsState?.sortedBy{ it.rank }
 
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.padding(top = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -65,7 +65,7 @@ fun CoinScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                if (viewModel.isLoading.value) {
+                if (coinsState is ListCoinState.Loading) {
                     CircularProgressIndicator(color = Color.White)
                 } else {
                     Text("Refresh")
@@ -74,45 +74,34 @@ fun CoinScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (coinsState != null) {
-                if (coinsState!!.isNotEmpty()) {
-                    LazyColumn {
-                        items(coinsState!!) { coin ->
-                            Column(
-                                modifier = Modifier.animateContentSize() // Animate item placement
+            if (coinsState is ListCoinState.Success) {
+                LazyColumn {
+                    items(coinsState.coin) { coin ->
+                        Column(
+                            modifier = Modifier.animateContentSize() // Animate item placement
+                        ) {
+                            Button(
+                                onClick = { onCoinClick(coin.id) },
+                                modifier = Modifier.padding(16.dp)
                             ) {
-                                Button(
-                                    onClick = { onCoinClick(coin.id) },
-                                    modifier = Modifier.padding(16.dp)
-                                ) {
-                                    Text("#${coin.rank}")
-                                    Spacer(modifier = Modifier.padding(6.dp))
-                                    Text(coin.name)
-                                    Spacer(modifier = Modifier.padding(6.dp))
-                                    Text(coin.symbol)
-                                }
+                                Text("#${coin.rank}")
+                                Spacer(modifier = Modifier.padding(6.dp))
+                                Text(coin.name)
+                                Spacer(modifier = Modifier.padding(6.dp))
+                                Text(coin.symbol)
                             }
-                            Divider(color = Color.Gray, thickness = 1.dp)
                         }
+                        Divider(color = Color.Gray, thickness = 1.dp)
                     }
-                } else {
-                    Text(
-                        text = "No coins available",
-                        style = androidx.compose.ui.text.TextStyle(
-                            color = Color.Red,
-                            fontSize = 18.sp
-                        )
-                    )
                 }
-            } else {
-                val errorState by viewModel.error.observeAsState()
-                if (errorState != null) {
-                    Text(
-                        text = "$errorState",
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        style = androidx.compose.ui.text.TextStyle(color = Color.Red, fontSize = 18.sp)
+            } else if (coinsState is ListCoinState.Error) {
+                Text(
+                    text = "No coins available: ${coinsState.error.message}",
+                    style = androidx.compose.ui.text.TextStyle(
+                        color = Color.Red,
+                        fontSize = 18.sp
                     )
-                }
+                )
             }
         }
     }

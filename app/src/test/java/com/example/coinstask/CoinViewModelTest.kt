@@ -1,13 +1,11 @@
 package com.example.coinstask
 
-import CoinViewModel
+import com.example.coinstask.viewmodel.CoinViewModel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.coinstask.data.api.ApiService
 import com.example.coinstask.data.dto.CoinDto
 import com.example.coinstask.data.repository.CoinRepository
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +32,7 @@ class CoinViewModelTest {
     }
 
     @Test
-    fun `test getCoins retrieves and sets coins value`() = runTest {
+    fun `test getCoins retrieves and sets coins value`()  {
         // Create a mock CoinRepository
         val coinRepository = mock(CoinRepository::class.java)
 
@@ -72,7 +70,7 @@ class CoinViewModelTest {
         // Mock the repository to return Result.success(coins)
         `when`(coinRepository.getCoins()).thenReturn(Result.success(coins))
 
-        // Create the CoinViewModel with the mocked repository
+        // Create the com.example.coinstask.ui.viewmodel.CoinViewModel with the mocked repository
         val coinViewModel = CoinViewModel(coinRepository)
 
         // Call the getCoins() method within a coroutine scope

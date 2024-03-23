@@ -48,7 +48,7 @@ fun CoinDetailsScreen(
                     Text(text = "Name: ${state.coin.name}")
                     Spacer(modifier = Modifier.padding(8.dp))
                     if (state.coin.description.isNotEmpty()) {
-                        Text(text = "Description: ${state.coin}")
+                        Text(text = "Description: ${state.coin.description}")
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
                     Text(text = "Type: ${state.coin.type}")

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.coinstask.ui.view.CoinDetailsScreen
-import com.example.coinstask.ui.view.CoinScreen
+import com.example.coinstask.ui.view.CoinListScreen
 
 @Composable
 fun MainApp() {
@@ -16,7 +16,7 @@ fun MainApp() {
     MaterialTheme {
         NavHost(navController = navController, startDestination = "/") {
             composable(route = "/") {
-                CoinScreen(
+                CoinListScreen(
                     viewModel(),
                     onCoinClick = { coinId ->
                         navController.navigate("/coin/$coinId")

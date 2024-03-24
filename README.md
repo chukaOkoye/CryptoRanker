@@ -4,9 +4,8 @@ FUNCTIONALITY
 
 :heavy_check_mark: 1. When	the	app	is	started,	load	and	display	a	list	of	coins
    
-   :heavy_check_mark: i. Order	entries	by	name
-   
-   ii. Filter	the	list	based	on	tags.
+   :heavy_check_mark: i. Order	entries	by	rank
+
 
 :heavy_check_mark: 4. Display	a	divider	between	each	entry
 
@@ -30,6 +29,9 @@ DELIVERABLES
    Mockito),	so	it’s	tested	that	i.e.	entries	are	ordered	by	name,	etc.
 
 ## My Approach
-- Worked on making sure the main objectives were completed, however, was unsure of how to display the filter information, whether that would be a button on the screen or a constant display.
-- The ViewModelTest is incomplete due to issues with mocking the API service data, the IDE kept suggesting making the function public so it could be used but I opted against that.
-- Future work: I would work on filtering the names better and making the ViewModelTest work to test entries.
+- Worked on making sure the main objectives were completed, made sure each part of code adhered by MVVM standards and removed unnecessary code.
+- The main screen is a list that loads on first composition, but retains status unless the 'Refresh' button is clicked, which reruns the viewmodel call to load all coins.
+- Each button directs to another composable with additional information about the cryptocurrency chosen, by passing the coinID to retrofit and getting a response.
+- Was inspired by the recent interest in cryptocurrencies and to display information in an app, using Coil to upload the logo object from the data response.
+- The ViewModelTest is incomplete due to issues with mocking the state flow, unable to mimic the coinliststate to be success when ran.
+- Future work: I would work on making the ViewModelTest work to test entries, and add more details to the description.

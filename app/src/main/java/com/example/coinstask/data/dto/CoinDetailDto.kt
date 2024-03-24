@@ -7,6 +7,6 @@ data class CoinDetailDto(
     @SerializedName ("id") val id: String,
     @SerializedName ("is_active") val is_active: Boolean,
     @SerializedName ("name") val name: String,
-//    val tags: List<Tag>,
-    @SerializedName ("type") val type: String
+    @SerializedName ("type") val type: String,
+    @SerializedName("logo") val logo: String
 )

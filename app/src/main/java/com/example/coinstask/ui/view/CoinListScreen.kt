@@ -3,6 +3,7 @@ package com.example.coinstask.ui.view
 import android.widget.Toast
 import com.example.coinstask.ui.viewmodel.CoinListViewModel
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -45,7 +46,7 @@ import androidx.compose.ui.unit.sp
 import com.example.coinstask.ui.viewmodel.ListCoinState
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun CoinListScreen(
     viewModel: CoinListViewModel,
@@ -90,20 +91,17 @@ fun CoinListScreen(
                     LazyColumn {
                         items(coinsState.coin) { coin ->
                             Column(
-                                modifier = Modifier.animateContentSize() // Animate item placement
+                                modifier = Modifier.animateItemPlacement()  // Animate item placement
                             ) {
                                 FilledTonalButton(
                                     onClick = { onCoinClick(coin.id) },
                                     modifier = Modifier.padding(16.dp)
+                                        .animateItemPlacement()
                                 ) {
                                     Text(
                                         text = "#${coin.rank}  ${coin.name}  (${coin.symbol})",
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontWeight = Bold)
-//                                    Spacer(modifier = Modifier.padding(6.dp))
-//                                    Text(coin.name)
-//                                    Spacer(modifier = Modifier.padding(6.dp))
-//                                    Text("(${coin.symbol})")
                                 }
                             }
                             Divider(color = Color.Gray, thickness = 1.dp)

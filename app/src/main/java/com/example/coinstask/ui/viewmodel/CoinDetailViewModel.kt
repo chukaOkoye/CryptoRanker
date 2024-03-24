@@ -7,13 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.coinstask.data.api.ApiService
 import com.example.coinstask.data.api.NetworkDataSource
 import com.example.coinstask.data.dto.CoinDetailDto
-import com.example.coinstask.data.dto.CoinDto
 import com.example.coinstask.data.repository.DetailCoinRepository
-import com.example.coinstask.data.repository.ListCoinRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-
 
 sealed class DetailsCoinState {
     object Empty : DetailsCoinState()

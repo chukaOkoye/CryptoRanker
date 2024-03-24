@@ -45,7 +45,7 @@ class CoinDetailViewModel: ViewModel() {
                 Log.d(ContentValues.TAG, "Coin Detail: ${(DetailsCoinState.Success(coin)).coin}")
 
             } catch (e: Exception) {
-                _detailScreenState.value = DetailsCoinState.Error("Error fetching coin details: ${e.message}")
+                _detailScreenState.value = DetailsCoinState.Error(e.message.toString())
             }
         }
 

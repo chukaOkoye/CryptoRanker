@@ -32,6 +32,7 @@ class CoinListViewModel() : ViewModel() {
         val apiService = ApiService.getInstance()
         val networkDataSource = NetworkDataSource(apiService)
         repository = ListCoinRepository(networkDataSource)
+        loadCoins()
     }
 
     fun loadCoins() {

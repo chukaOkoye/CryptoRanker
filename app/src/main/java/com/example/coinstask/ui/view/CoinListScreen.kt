@@ -30,15 +30,13 @@ import com.example.coinstask.ui.viewmodel.ListCoinState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CoinScreen(
+fun CoinListScreen(
     viewModel: CoinListViewModel,
     onCoinClick: (id: String) -> Unit ){
 
     val coinsState = viewModel.listScreenState.collectAsState().value
 
-    LaunchedEffect(Unit) {
-        viewModel.loadCoins()
-    }
+    // No LaunchedEffect to prevent constant reload
 
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.padding(top = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {

@@ -8,17 +8,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
 
-class DetailCoinRepository(private var networkDataSource: NetworkDataSource) {
+class DetailCoinRepository(private val networkDataSource: NetworkDataSource) {
 
     suspend fun getCoinDetails(coinId: String): CoinDetailDto {
         return try {
             withContext(Dispatchers.IO) {
-                withContext(Dispatchers.IO) {
-                    networkDataSource.fetchCoinDetails(coinId)
-                }
+                networkDataSource.fetchCoinDetails(coinId)
             }
-        } catch (e: Exception){
-            Log.e(ContentValues.TAG,"Retrofit exception Coin details: ${e.message}")
+        } catch (e: Exception) {
+            Log.e(ContentValues.TAG, "Retrofit exception Coin details: ${e.message}")
             throw e
         }
     }

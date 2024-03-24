@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
 
 class ListCoinRepository(
-    private var networkDataSource: NetworkDataSource
+    private val networkDataSource: NetworkDataSource
     ) {
     suspend fun getCoins(): List<CoinDto> {
         return try {

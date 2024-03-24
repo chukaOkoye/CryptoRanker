@@ -36,8 +36,8 @@ class CoinDetailViewModel: ViewModel() {
 
     fun loadCoinDetails(coinId:String) {
         viewModelScope.launch {
+            _detailScreenState.value = DetailsCoinState.Loading
             try {
-                _detailScreenState.value = DetailsCoinState.Loading
                 val coin = repository.getCoinDetails(coinId)
                 _detailScreenState.value = DetailsCoinState.Success(coin)
 

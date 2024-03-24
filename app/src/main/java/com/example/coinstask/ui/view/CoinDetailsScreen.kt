@@ -102,15 +102,31 @@ fun CoinDetailsScreen(
             }
 
             is DetailsCoinState.Error -> {
-                Text(
-                    text = "Error: ${state.error}",
-                    modifier = Modifier.padding(16.dp)
-                        .align(Alignment.Center),
-                    style = androidx.compose.ui.text.TextStyle(
-                        color = Color.Red,
-                        fontSize = 18.sp
+
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(25.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Text(
+                        text = "Error: ${state.error}",
+                        modifier = Modifier.padding(16.dp),
+                        style = androidx.compose.ui.text.TextStyle(
+                            color = Color.Red,
+                            fontSize = 18.sp
+                        )
                     )
-                )
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            Icons.Outlined.ArrowBack,
+                            contentDescription = stringResource(R.string.back_button),
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
+                }
             }
 
             is DetailsCoinState.Loading -> {

@@ -29,8 +29,8 @@ DELIVERABLES
    Mockito),	so	it’s	tested	that	i.e.	entries	are	ordered	by	name,	etc.
 
 ## My Approach
-- Worked on making sure the main objectives were completed, made sure each part of code adhered by MVVM standards and removed unnecessary code.
+- Worked on making sure the main objectives were completed, made sure each part of code adhered by MVVM standards and created in Jetpack Compose.
 - The main screen is a list that loads on first composition, but retains status unless the 'Refresh' button is clicked, which reruns the ViewModel call to load all coins.
-- Each button directs to another composable with additional information about the cryptocurrency chosen, by passing the coinID to Retrofit and seamlessly pulls real-time cryptocurrency data from the CoinPaprika API.
+- Each button directs to another composable with additional information about the cryptocurrency chosen, by passing the coinID to Retrofit/Coroutines and seamlessly pulls real-time cryptocurrency data from the CoinPaprika API.
 - The ViewModelTest is incomplete due to issues with mocking the state flow, unable to mimic the CoinListState to be success when ran in the test environment.
 - Future work: I would work on making the ViewModelTest work to test entries, and add a network cache for offline storage.

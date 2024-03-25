@@ -8,7 +8,9 @@ import com.example.coinstask.ui.viewmodel.ListCoinState
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -22,6 +24,11 @@ import org.mockito.MockitoAnnotations
 
 @ExperimentalCoroutinesApi
 class CoinListViewModelTest {
+
+    /**
+     * I would have tested the ViewModel interactions better
+     * (the DI framework can help with the setup here)
+     */
 
     @Mock
     lateinit var listCoinRepository: ListCoinRepository
@@ -75,11 +82,19 @@ class CoinListViewModelTest {
         // Mock the repository to return an empty list of coins
         `when`(listCoinRepository.getCoins()).thenReturn(emptyList())
 
-        // Initialize the ViewModel
-        coinListViewModel = CoinListViewModel()
+        assertEquals(0, coinListViewModel.listScreenState.value)
 
         // Trigger the loading of coins
         coinListViewModel.loadCoins()
+
+        // Initialize the ViewModel
+        coinListViewModel = CoinListViewModel()
+
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            coinListViewModel.listScreenState.value
+        }
+
+
 
         // Advance the test dispatcher until all coroutines are completed
         testDispatcher.scheduler.advanceUntilIdle()

@@ -30,8 +30,7 @@ DELIVERABLES
 
 ## My Approach
 - Worked on making sure the main objectives were completed, made sure each part of code adhered by MVVM standards and removed unnecessary code.
-- The main screen is a list that loads on first composition, but retains status unless the 'Refresh' button is clicked, which reruns the viewmodel call to load all coins.
-- Each button directs to another composable with additional information about the cryptocurrency chosen, by passing the coinID to retrofit and getting a response.
-- Was inspired by the recent interest in cryptocurrencies and to display information in an app, using Coil to upload the logo object from the data response.
-- The ViewModelTest is incomplete due to issues with mocking the state flow, unable to mimic the coinliststate to be success when ran.
-- Future work: I would work on making the ViewModelTest work to test entries, and add more details to the description.
+- The main screen is a list that loads on first composition, but retains status unless the 'Refresh' button is clicked, which reruns the ViewModel call to load all coins.
+- Each button directs to another composable with additional information about the cryptocurrency chosen, by passing the coinID to Retrofit and seamlessly pulls real-time cryptocurrency data from the CoinPaprika API.
+- The ViewModelTest is incomplete due to issues with mocking the state flow, unable to mimic the CoinListState to be success when ran in the test environment.
+- Future work: I would work on making the ViewModelTest work to test entries, and add a network cache for offline storage.

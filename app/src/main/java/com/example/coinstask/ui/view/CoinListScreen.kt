@@ -53,7 +53,6 @@ fun CoinListScreen(
     onCoinClick: (id: String) -> Unit ){
 
     val coinsState = viewModel.listScreenState.collectAsState().value
-    val context = LocalContext.current
 
     // No LaunchedEffect to prevent constant reload
 
@@ -80,8 +79,6 @@ fun CoinListScreen(
                     CircularProgressIndicator(color = Color.White)
                 } else {
                     Text("Refresh")
-                    // Show toast that refresh was successful
-//                    Toast.makeText(context, "Coins Load successful!", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -107,12 +104,10 @@ fun CoinListScreen(
                             Divider(color = Color.Gray, thickness = 1.dp)
                         }
                     }
-
-
                 }
                 is ListCoinState.Error -> {
                     Text(
-                        text = "No coins available: ${coinsState.error}",
+                        text = "No network: ${coinsState.error}",
                         style = androidx.compose.ui.text.TextStyle(
                             color = Color.Red,
                             fontSize = 18.sp

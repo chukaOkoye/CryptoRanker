@@ -9,7 +9,6 @@ import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
 
 class DetailCoinRepository(private val networkDataSource: NetworkDataSource) {
-
     suspend fun getCoinDetails(coinId: String): CoinDetailDto {
         return try {
             withContext(Dispatchers.IO) {

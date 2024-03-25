@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CoinsTask</string>
     <string name="title_activity_coin_screen">CoinScreen</string>
+    <string name="coin_logo">Coin logo</string>
+    <string name="back_button">Back</string>
+    <string name="no_details_present">No details present</string>
 </resources>
